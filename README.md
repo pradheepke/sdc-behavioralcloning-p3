@@ -40,7 +40,7 @@ Three main things that helped
 
 Without the clockwise driving data, we can see from this that there is clearly overfitting.
 ![Validation MSE for NoAug][ValNoAug]
-Validation loss improves until epoch 6. After epoch 6, training loss continues to drop from 0.0089 to 0.0069, dropping 23%, but validation loss goes the other way, from a to b, worse by 16%.
+Validation loss improves until epoch 6. After epoch 6, training loss continues to drop from 0.0089 to 0.0069, dropping 23%, but validation loss goes the other way, from 0.0095 to 0.0110, worse by 16%.
 
 With the clockwise driving data, there is still overfitting but to a slightly lesser extent. Training loss improves from 0.0155 to 0.0119 after epoch 6 (30%), but validation loss goes worse only by 9%.
 ![Validation MSE][ValAug]
