@@ -36,8 +36,7 @@ Three main things that helped
  1. *Checkpointing using monitor*: I noticed a lot of overfitting from the training logs, that is, training loss improving but validation loss not improving after early iterations. I found it efficient to add a checkpoint monitor here which saved a lot of manual repeats to identify optimal number of epochs. This will just save model whenever validation loss improved and I always saved the last snapshot so I can visualize the effect of early stopping.
  1. *Augmenting using clockwise driving*: The above two steps got the model to pretty good performance on track 1. It wouldn't always be near center but it would recover from several situations as shown in the checked-in supplementary videos. Based on the failure scenario, it seemed that there still wasn't enough cases of deciding when to go right and when to go left. So I added data from simulator but reversing the car and started driving clockwise to collect training data. A model trained with this data including early stopping shows perfect performance for track 1. It is interesting to note that I added just about 2.6K images to the training data, just about 20% more training data.
 
-*Overfitting*
-It is interesting to note the effect of augmented data on overfitting.
+*Overfitting*: It is interesting to note the effect of augmented data on overfitting.
 
 Without the clockwise driving data, we can see from this that there is clearly overfitting.
 ![Validation MSE for NoAug][ValNoAug]
@@ -45,6 +44,8 @@ Validation loss improves until epoch 6. After epoch 6, training loss continues t
 
 With the clockwise driving data, there is still overfitting but to a slightly lesser extent. Training loss improves from 0.0155 to 0.0119 after epoch 6 (30%), but validation loss goes worse only by 9%.
 ![Validation MSE][ValAug]
+
+More such iterations are required to improve the generalization of the model but this works sufficient for track 1.
 
 Without augmentation, this is an example failure scene.
 ![Sample failure scenario for no augmentation][FailNoAug]
