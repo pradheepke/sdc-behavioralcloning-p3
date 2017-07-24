@@ -19,7 +19,7 @@ I have also included two other videos with models from intermediate iterations t
 
 I used the nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
 
-It seems to have sufficient representation power (5 conv+ReLU layers, 4 FC layers -- covered will with lot of  parameters and non-linearity), so I did not try much model architecture explorations.
+It seems to have a good amount of representation power (5 conv+ReLU layers, 4 FC layers -- covered well with lot of parameters and non-linearity), so I did not try much model architecture explorations.
 
 I was actually surprised that when I trained a simple 1 layer model with all the images, the model went a fair distance (probably 50% of the lap) without much issues.
 
