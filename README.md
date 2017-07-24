@@ -53,9 +53,9 @@ Without augmentation, this is an example failure scene.
 The attached video, video.mp4, shows the successful model, and the two other videos illustrate effect of lack of early stopping and lack of data augmentation.
 
 *CPU*
- - I found it interesting that it was "sufficient" to just use CPU to do well on track 1. Adding the checkpoint monitor helped to avoid wasted cycles of iterations. 
- - Takes about 30mins for each epoch with more data, so got a decent model in a couple of hours.
- - Of course, for the model to really generalize, GPU will be required for faster iterations and taking lot more data.
+ - I found it interesting that it was "sufficient" to just use CPU to do well on track 1. Adding the checkpoint monitor helped to avoid wasted cycles of iterations. I used only 15k images, for which training times were maximum 20 mins/epoch. I didn't even try to downsize the image, which would make it more efficient.
+ - With 20mins for each epoch with more data, we can get a decent model in a couple of hours.
+ - Of course, for the model to really generalize across tracks, we will need to train with lot more data. GPU will definitely be required for faster iterations in that case.
 
 ## Reflections
  This was a useful exercise to see an end-to-end system though in simulator for predicting steering angle.
