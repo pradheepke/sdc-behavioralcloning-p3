@@ -14,11 +14,26 @@ I have also included two other videos with models from intermediate iterations t
 
 I used the nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
 
+It seems to have sufficient representation power (number of parameters and non-linearity), so I did not try much model architecture explorations.
+
+I was actually surprised that when I trained a simple 1 layer model with all the images, the model went a fair distance (probably 50% of the lap) without much issues.
+
+When I tried training with the nVidia architecture, with all images, it went almost the whole lap. It usually failed either near the water body at the very end or the bridge earlier. 
+
 Overfitting/underfitting detection.
 
-## Sequence of steps to improve:
+## Iterations to improve accuracy
+
+I used the Adam optimizer. So did not tune learning rates and other parameters.
+
+The main tactics I used to improve generalization were data augmentation and early stopping.
+
+Three main things that helped
+ 1. *Augmenting using LR Flip*: Based on initial runs, I thought that the model may be overfitting driving only to the left. So, I augmented the data with left-right flipped images and reversed steering angles.
+ 1. *Checkpointing using monitor*: I noticed a lot of overfitting from the training logs, that is, training loss improving but validation loss not improving after early iterations. I found it efficient to add a checkpoint monitor here which saved a lot of manual repeats to identify optimal number of epochs. This will just save model whenever validation loss improved and I always saved the last snapshot so I can visualize the effect of early stopping.
+ 1. *Augmenting using clockwise driving*: The above two steps got the model to pretty good performance on track 1. It wouldn't always be near center but it would recover from several situations as shown in the checked-in supplementary videos. Based on the failure scenario, it seemed that there still wasn't enough cases of deciding when to go right and when to go left. So I added data from simulator but reversing the car and started driving clockwise to collect training data. A model trained with this data including early stopping shows perfect performance for track 1.
+
  - Flip LR.
- - 1000 images. 
  - Checkpointing for convenient early stopping
 
  - Simulation
