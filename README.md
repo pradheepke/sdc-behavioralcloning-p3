@@ -27,3 +27,12 @@ Other than blackbox system level heuristics?
 How to decide what kind of data that I should augment it with?
 
 
+[//]: # (Image References)
+[ValAug]: ./img/ValidationAugment.png
+[ValNoAug]: ./img/ValidationNoAugment.png
+[FailNoAug]: ./img/FailureCaseNoAugment.png
+
+![Validation MSE][ValAug]
+![Validation MSE for NoAug][ValNoAug]
+![Sample failure scenario for no augmentation][FailNoAug]
+
