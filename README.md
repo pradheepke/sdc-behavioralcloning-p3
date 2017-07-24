@@ -1,10 +1,18 @@
 # Behaviorial Cloning Project
 
+## Overview
+
+The approach I took:
+ - First get a simple model, train on 1K images, get end to end training and feeding data to simulator working.
+ - Pick an architecture used for this problem (nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). Make sure end-to-end works on small set of images.
+ - Understand errors, improve model, iterate.
+
+The file video.mp4 shows final video of model which is running perfectly for track 1.
+I have also included two other videos with models from intermediate iterations to illustrate where things were failing.
+
 ## Model architecture
 
-Tried simple first to make sure end to end is working.
-
-nVidia architecture.
+I used the nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
 
 Overfitting/underfitting detection.
 
