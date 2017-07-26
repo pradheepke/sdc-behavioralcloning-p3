@@ -4,6 +4,7 @@
 [ValAug]: ./img/ValidationAugment.png
 [ValNoAug]: ./img/ValidationNoAugment.png
 [FailNoAug]: ./img/FailureCaseNoAugment.png
+[Val05]: ./img/ValidationDropout05.png
 
 ## Overview
 
@@ -17,17 +18,43 @@ I have also included two other videos with models from intermediate iterations t
 
 ## Model architecture
 
-I used the nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
+I used the nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/.
 
-It seems to have a good amount of representation power (5 conv+ReLU layers, 4 FC layers -- covered well with lot of parameters and non-linearity), so I did not try much model architecture explorations.
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 160x320x3 RGB image   							| 
+| Cropping                      | Crops out only the bottom portion of the image ((70,25), (0,0)) |
+| Conv + ReLU                   | 24 output layers, 5 x 5 kernel, stride=2  |
+| Conv + ReLU                   | 36 output layers, 5 x 5 kernel, stride=2  |
+| Conv + ReLU                   | 48 output layers, 5 x 5 kernel, stride=2  |
+| Conv + ReLU                   | 64 output layers, 3 x 3 kernel, stride=1  |
+| Dropout                       | Dropout parameters to the next FC layer (0.2 to 0.5 prob of dropping out) |
+| FC (200) | Fully connected layers producing 200 outputs |
+| FC (50)  | Fully connected layers producing 50 outputs |
+| FC (10)  | Fully connected layers producing 10 outputs |
+| FC (1)   | Fully connected layers producing 1 output, this is the predicted steering angle |
+
+Loss metric: mean squared error. 
+
+It seems to have a good amount of representation power (5 conv+ReLU layers, 4 FC layers -- covered well with lot of parameters, about 250K, and non-linearity), so I did not try much model architecture explorations.
 
 I was actually surprised that when I trained a simple 1 layer model with all the images, the model went a fair distance (probably 50% of the lap) without much issues.
 
 When I tried training with the nVidia architecture, with all images, it went almost the whole lap. It usually failed either near the water body at the very end or the bridge earlier. 
 
-## Iterations to improve accuracy
+## Training
 
-I used the Adam optimize, and did not tune learning rates or any optimizer parameters.
+*Dataset*: 
+I used the dataset provided for the project. This has 8037 entries. I used 80% of the data for training 20% for test. So, this gave roughly 6400 training logs.
+
+As an improvement, later I augmented the data with LR flips. So this doubled the training data to 12800. 
+
+Finally, I augmented the data with 1 lap of driving clockwise from the simulator. This produced another 2.4K images, to provide a total training set of about 15K training entries.
+
+*Optimizer*:
+I used the Adam optimizer, and did not tune learning rates or any optimizer parameters.
+
+## Iterations to improve accuracy
 
 The main tactics I used to improve generalization were data augmentation and early stopping.
 
@@ -45,7 +72,9 @@ Validation loss improves until epoch 6. After epoch 6, training loss continues t
 With the clockwise driving data, there is still overfitting but to a slightly lesser extent. Training loss improves from 0.0155 to 0.0119 after epoch 6 (30%), but validation loss goes worse only by 9%.
 ![Validation MSE][ValAug]
 
-More such iterations are required to improve the generalization of the model but this works sufficient for track 1.
+I added a dropout layer before the first fully connected layer producing 100 outputs. 
+This improves the validation MSE, and prevents it from going up. More epochs are needed (went from 10 to 20 in this case).
+![Validation dropout][Val05]
 
 Without augmentation, this is an example failure scene.
 ![Sample failure scenario for no augmentation][FailNoAug]
