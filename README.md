@@ -13,7 +13,7 @@ The approach I took:
  - Pick an architecture used for this problem (nVidia architecture: https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/). Make sure end-to-end works on small set of images.
  - Understand errors, improve model, iterate.
 
-The file video.mp4 shows final video of model which is running perfectly for track 1.
+The file [video.mp4](./video.mp4) shows final video of model which is running perfectly for track 1.
 I have also included two other videos with models from intermediate iterations to illustrate where things were failing.
 
 ## Model architecture
@@ -79,7 +79,7 @@ This improves the validation MSE, and prevents it from going up. More epochs are
 Without augmentation, this is an example failure scene.
 ![Sample failure scenario for no augmentation][FailNoAug]
 
-The attached video, video.mp4, shows the successful model, and the two other videos illustrate effect of lack of early stopping and lack of data augmentation.
+The attached video, [video.mp4](./video.mp4) shows the successful model, and the two other videos illustrate effect of lack of early stopping and lack of data augmentation.
 
 *CPU*
  - I found it interesting that it was "sufficient" to just use CPU to do well on track 1. Adding the checkpoint monitor helped to avoid wasted cycles of iterations. I used only 15k images, for which training times were maximum 20 mins/epoch. I didn't even try to downsize the image, which would make it more efficient.
